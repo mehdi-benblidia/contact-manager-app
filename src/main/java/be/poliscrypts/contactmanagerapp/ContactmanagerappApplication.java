@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ContactmanagerappApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ContactmanagerappApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ContactmanagerappApplication.class, args);
+    }
 
 }

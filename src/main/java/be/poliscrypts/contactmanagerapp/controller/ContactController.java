@@ -2,7 +2,6 @@ package be.poliscrypts.contactmanagerapp.controller;
 
 import be.poliscrypts.contactmanagerapp.model.*;
 import be.poliscrypts.contactmanagerapp.service.*;
-import lombok.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +11,9 @@ import java.util.*;
 @RequestMapping("api/be/contact")
 public class ContactController {
 
-    private final ContactServiceImpl contactService;
+    private final ContactService contactService;
 
-    public ContactController(ContactServiceImpl contactService) {
+    public ContactController(ContactService contactService) {
         this.contactService = contactService;
     }
 

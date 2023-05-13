@@ -30,7 +30,7 @@ public class Company {
 
     @ManyToMany
     @JoinTable(name = "company_contact",
-    joinColumns = @JoinColumn(name="company_id")
-    ,inverseJoinColumns = @JoinColumn(name = "contact_id"))
+            joinColumns = @JoinColumn(name = "company_id")
+            , inverseJoinColumns = @JoinColumn(name = "contact_id"))
     private Set<Contact> contactsList = new HashSet<>();
 }

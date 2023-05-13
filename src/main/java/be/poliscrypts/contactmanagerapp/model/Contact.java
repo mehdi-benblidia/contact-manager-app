@@ -8,6 +8,7 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Entity
 @Table(name = "contact")
 public class Contact {
@@ -32,8 +33,9 @@ public class Contact {
     @Column(name = "tva")
     private String tva;
 
-    @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "statut")
+    private String statut;
 
     @ManyToMany(mappedBy = "contactsList")
     private Set<Company> companiesList = new HashSet<>();

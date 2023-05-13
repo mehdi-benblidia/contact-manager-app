@@ -9,10 +9,11 @@ import java.util.*;
 @Repository
 public interface ContactRepo extends JpaRepository<Contact, Long> {
 
-    //Contact findContactById(Long id);
+    Optional<Contact> findContactById(Long id);
 
     Contact findContactByUuid(UUID uuid);
 
     Contact updateContact(Contact contact);
+
     void deleteByUUID(UUID uuid);
 }

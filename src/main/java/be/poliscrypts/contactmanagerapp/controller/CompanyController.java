@@ -2,8 +2,6 @@ package be.poliscrypts.contactmanagerapp.controller;
 
 import be.poliscrypts.contactmanagerapp.model.*;
 import be.poliscrypts.contactmanagerapp.service.*;
-import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +10,9 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/be/company")
 public class CompanyController {
-    private final CompanyServiceImpl companyService;
+    private final CompanyService companyService;
 
-    public CompanyController(CompanyServiceImpl companyService) {
+    public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
 
@@ -24,13 +22,13 @@ public class CompanyController {
         return new ResponseEntity<>(companiesList, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Company> getCompanyById(@PathVariable("id") Long id) {
         Company company = companyService.findCompanyById(id);
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
-    @GetMapping("/{uuid}")
+    @GetMapping("/uuid/{uuid}")
     public ResponseEntity<Company> getCompanyByUuid(@PathVariable("uuid") UUID uuid) {
         Company company = companyService.findCompanyByUuid(uuid);
         return new ResponseEntity<>(company, HttpStatus.OK);
