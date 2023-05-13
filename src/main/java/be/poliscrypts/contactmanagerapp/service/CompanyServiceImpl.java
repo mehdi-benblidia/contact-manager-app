@@ -14,9 +14,12 @@ import java.util.*;
 public abstract class CompanyServiceImpl implements CompanyService {
 
     private CompanyRepo companyRepo;
+    private final ContactRepo contactRepo;
 
-    public CompanyServiceImpl(CompanyRepo companyRepo) {
+    public CompanyServiceImpl(CompanyRepo companyRepo,
+                              ContactRepo contactRepo) {
         this.companyRepo = companyRepo;
+        this.contactRepo = contactRepo;
     }
 
     @Override
@@ -38,7 +41,24 @@ public abstract class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public Company updateCompany(Company company) {
+        return null;
+    }
+
+    @Override
     public void deleteByUUID(UUID uuid) {
         companyRepo.deleteByUUID(uuid);
+    }
+
+    @Override
+    public void addContactToCompany(Long companyId, Long contactId) {
+        Optional<Company> optionalCompany = companyRepo.findCompanyById(companyId);
+        Optional<Contact> optionalContact = contactRepo.findContactById(contactId);
+        if (optionalCompany.isPresent() && optionalContact.isPresent()) {
+            Company company = optionalCompany.get();
+            Contact contact = optionalContact.get();
+            company.getContactsList().add(contact);
+            companyRepo.save(company);
+        }
     }
 }

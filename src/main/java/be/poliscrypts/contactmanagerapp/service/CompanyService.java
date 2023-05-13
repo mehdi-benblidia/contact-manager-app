@@ -20,4 +20,6 @@ public interface CompanyService {
 
     void deleteByUUID(UUID uuid);
 
+    void addContactToCompany(Long companyId, Long contactId);
+
 }
