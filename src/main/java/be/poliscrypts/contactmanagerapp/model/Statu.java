@@ -1,6 +1,6 @@
 package be.poliscrypts.contactmanagerapp.model;
 
-public enum Statut {
+public enum Statu {
     EMPLOYEE,
     FREELANCE;
 }

@@ -3,8 +3,9 @@ package be.poliscrypts.contactmanagerapp.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.*;
-
+import java.util.UUID;
+import java.util.Set;
+import java.util.HashSet;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,11 +20,11 @@ public class Company {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "uuid")
+    @Column(name = "uuid", updatable = false)
     private UUID uuid;
 
-    @Column(name = "adress")
-    private String adress;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "tva")
     private String tva;

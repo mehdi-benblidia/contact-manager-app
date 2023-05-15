@@ -18,7 +18,7 @@ public class Contact {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "uuid")
+    @Column(name = "uuid", updatable = false, unique = true)
     private UUID uuid;
 
     @Column(name = "first_name")
@@ -27,16 +27,21 @@ public class Contact {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "adress")
-    private String adress;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "tva")
     private String tva;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "statut")
-    private String statut;
+    @Column(name = "statu")
+    private Statu statu;
 
     @ManyToMany(mappedBy = "contactsList")
     private Set<Company> companiesList = new HashSet<>();
+
+    public void removeCompany(Company company) {
+        this.companiesList.remove(company);
+        company.getContactsList().remove(this);
+    }
 }
