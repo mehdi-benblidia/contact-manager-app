@@ -1,62 +1,69 @@
 package be.poliscrypts.contactmanagerapp.service;
 
+import be.poliscrypts.contactmanagerapp.exception.*;
 import be.poliscrypts.contactmanagerapp.model.*;
 import be.poliscrypts.contactmanagerapp.repository.*;
-import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
 import java.util.*;
 
-@Service
 @Transactional
-public abstract class CompanyServiceImpl implements CompanyService {
+@Service
+public class CompanyServiceImpl implements CompanyService {
 
-    private CompanyRepo companyRepo;
+    private final CompanyRepo companyRepo;
     private final ContactRepo contactRepo;
 
-    public CompanyServiceImpl(CompanyRepo companyRepo,
-                              ContactRepo contactRepo) {
+    public CompanyServiceImpl(CompanyRepo companyRepo, ContactRepo contactRepo) {
         this.companyRepo = companyRepo;
         this.contactRepo = contactRepo;
     }
 
     @Override
     public List<Company> findAllCompanies() {
-        List<Company> companiesList = companyRepo.findAll();
-        return companiesList;
+        return companyRepo.findAll();
+    }
+
+    @Override
+    public Company findCompanyById(Long id) {
+        return companyRepo.findCompanyById(id);
     }
 
     @Override
     public Company findCompanyByUuid(UUID uuid) {
-        Company company = companyRepo.findCompanyByUuid(uuid);
-        return company;
+        return companyRepo.findCompanyByUuid(uuid);
     }
 
     @Override
     public Company addCompany(Company company) {
-        Company newCompany = companyRepo.save(company);
-        return newCompany;
+        company.setUuid(UUID.randomUUID());
+        return companyRepo.save(company);
     }
 
     @Override
     public Company updateCompany(Company company) {
-        return null;
+        Company companyToUpdate = companyRepo.findCompanyByUuid(company.getUuid());
+        if (companyToUpdate == null) throw new CompanyNotFoundException("Company to be updated not found");
+        company.setId(companyToUpdate.getId());
+        return companyRepo.save(company);
     }
 
     @Override
-    public void deleteByUUID(UUID uuid) {
-        companyRepo.deleteByUUID(uuid);
+    public void deleteCompanyByUuid(UUID uuid) {
+        if (!companyRepo.existsCompanyByUuid(uuid)) {
+            throw new CompanyNotFoundException("Company with uuid " + uuid + " does not exists");
+        }
+
+        companyRepo.deleteCompanyByUuid(uuid);
     }
 
     @Override
-    public void addContactToCompany(Long companyId, Long contactId) {
-        Optional<Company> optionalCompany = companyRepo.findCompanyById(companyId);
-        Optional<Contact> optionalContact = contactRepo.findContactById(contactId);
-        if (optionalCompany.isPresent() && optionalContact.isPresent()) {
-            Company company = optionalCompany.get();
-            Contact contact = optionalContact.get();
+    public void addContactToCompany(Company company, Long contactId) {
+        if (company == null) throw new CompanyNotFoundException("Company to add to the contact not founded");
+        Contact contact = contactRepo.findContactById(contactId);
+        if (contact != null) {
             company.getContactsList().add(contact);
             companyRepo.save(company);
         }
