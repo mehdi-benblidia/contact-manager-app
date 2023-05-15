@@ -9,12 +9,12 @@ import java.util.*;
 @Repository
 public interface CompanyRepo extends JpaRepository<Company, Long> {
 
-    Optional<Company> findCompanyById(Long id);
+    Company findCompanyById(Long id);
 
     Company findCompanyByUuid(UUID uuid);
 
-    Contact updateCompany(Company company);
+    Boolean existsCompanyByUuid(UUID uuid);
 
-    void deleteByUUID(UUID uuid);
+    void deleteCompanyByUuid(UUID uuid);
 
 }

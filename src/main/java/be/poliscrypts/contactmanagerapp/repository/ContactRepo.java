@@ -8,12 +8,11 @@ import java.util.*;
 
 @Repository
 public interface ContactRepo extends JpaRepository<Contact, Long> {
-
-    Optional<Contact> findContactById(Long id);
+    Contact findContactById(Long id);
 
     Contact findContactByUuid(UUID uuid);
 
-    Contact updateContact(Contact contact);
+    Boolean existsContactByUuid(UUID uuid);
 
-    void deleteByUUID(UUID uuid);
+    void deleteContactByUuid(UUID uuid);
 }
